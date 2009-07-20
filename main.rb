@@ -6,6 +6,7 @@ require 'sequel'
 use Rack::Session::Cookie
 gem 'rack-openid'
 require 'rack/openid'
+require 'ruby-debug'
 use Rack::OpenID
 
 configure do
@@ -26,6 +27,7 @@ configure do
       text :body
       text :slug
       text :tags
+      boolean :published, :default => false
       timestamp :created_at
     end #create_table
   end
@@ -70,7 +72,14 @@ layout 'layout'
 
 get '/' do
   @tags = Post.tags
-  posts = Post.reverse_order(:created_at).limit(10)
+  posts = Post.published_posts.reverse_order(:created_at).limit(10)
+  haml  :index, :locals => { :posts => posts }
+end
+
+get '/drafts' do
+  @tags = Post.tags
+  debugger
+  posts = Post.filter(:published => false).reverse_order(:created_at).limit(10)
   haml  :index, :locals => { :posts => posts }
 end
 
@@ -86,20 +95,20 @@ get '/past/:year/:month/:day/:slug' do
 end
 
 get '/past' do
-  posts = Post.reverse_order(:created_at)
+  posts = Post.published_posts.reverse_order(:created_at)
   @title = "Archive"
   haml :archive, :locals => { :posts => posts }
 end
 
 get '/past/tags/:tag' do
   tag = params[:tag]
-  posts = Post.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
+  posts = Post.published_posts.filter(:tags.like("%#{tag}%")).reverse_order(:created_at).limit(30)
   @title = "Posts tagged #{tag}"
   haml :tagged, :locals => { :posts => posts, :tag => tag }
 end
 
 get '/feed' do
-  @posts = Post.reverse_order(:created_at).limit(10)
+  @posts = Post.published_posts.reverse_order(:created_at).limit(10)
   content_type 'application/atom+xml', :charset => 'utf-8'
   builder :feed
 end
@@ -129,14 +138,14 @@ end
 
 get '/past/:year/:month/:day/:slug/edit' do
   auth
-  post = Post.filter(:slug => params[:slug]).first
+  post = Post.published_posts.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   haml :edit, :locals => { :post => post, :url => post.url }
 end
 
 post '/past/:year/:month/:day/:slug/' do
   auth
-  post = Post.filter(:slug => params[:slug]).first
+  post = Post.published_posts.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   post.title = params[:title]
   post.tags = params[:tags]

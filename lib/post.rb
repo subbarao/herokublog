@@ -13,6 +13,10 @@ class Post < Sequel::Model
     Blog.url_base.gsub(/\/$/, '') + url
   end
 
+  def self.published_posts
+    self.filter(:published => true)
+  end
+
   def body_html
     to_html(body)
   end
@@ -39,7 +43,7 @@ class Post < Sequel::Model
 
   # returns sorted unique non nil non empty tags, see specs
   def self.tags
-    map(:tags).compact. # nils out
+    published_posts.map(:tags).compact. # nils out
     collect { |t| t.split(',') }.flatten.uniq. # unique tags in 1-dim array
     collect { |t| t.strip }.sort # around spaces out and sorting
   end
