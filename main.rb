@@ -12,7 +12,7 @@ configure do
   require 'ostruct'
   Blog = OpenStruct.new( { :identity_url => 'http://subbarao.myopenid.com/',
     :title => "RuBy JavAsCriPt RaCk rAIls SinAtRa",
-    :header => "",
+    :header => "Learning grows on.......",
     :disqus_shortname => nil,
     :admin_cookie_key => "scanty_admin",
     :admin_cookie_value => "51d6d976913ace58",
