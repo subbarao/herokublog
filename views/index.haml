@@ -1,0 +1,20 @@
+- for current_post in posts 
+  .post
+    %h2.title
+      %span.date
+        = current_post[:created_at].strftime("%b")
+        %b
+          = current_post[:created_at].strftime("%d")
+      %a{ :href => "#{current_post.url}" }= current_post[:title]
+    %p
+      = "tags:"
+      %small.tags
+        = current_post.linked_tags
+      - if Blog.disqus_shortname 
+        |
+      %a{ :href => "#{current_post.url}" }
+    .entry
+      = current_post.summary_html
+      - if current_post.more?
+        %a{ :href => "#{current_post.url}" } Continue reading &raquo;
+

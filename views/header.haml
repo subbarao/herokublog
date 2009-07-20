@@ -1,0 +1,12 @@
+#header
+  #logo
+    %h1
+      %a{:href => "/" }= Blog.title
+    %h2= "by #{Blog.author}"
+  - if admin?
+    #menu
+      %ul
+        %li
+          %a{ :href => "/logout" } Logout !!!
+        %li
+          %a{ :href => "/posts/new" } New post

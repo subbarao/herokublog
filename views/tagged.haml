@@ -1,0 +1,19 @@
+%h1= "Posts tagged  #{tag}"
+- for current_post in posts 
+  .post
+    %p.date
+      = current_post[:created_at].strftime("%b")
+      %b 
+        = current_post[:created_at].strftime("%d")
+    %h2.title
+      %a{ :href => current_post.url }= current_post[:title]
+    %p.meta
+      %small
+        = current_post.linked_tags
+        |
+        %a{ :href => "#{current_post.url}#disqus_thread" } 
+          comments
+    .entry
+      = current_post.summary_html
+      - if current_post.more?
+        %a{ :href => current_post.url } Continue reading &raquo;

@@ -1,0 +1,18 @@
+.post
+  %h2.title
+    %span.date
+      = post.created_at.strftime("%b")
+      %b
+        = post.created_at.strftime("%d")
+    %b
+      %a{:href => "#{post.url}" }= post.title
+  %p 
+    = "tags:"
+    %small.tags= post.linked_tags
+  .entry= post.body_html
+  - if admin?
+    #menu
+      %ul
+        %li
+          %a{ :href => "#{post.url}edit" } edit
+= partial(:disqus)

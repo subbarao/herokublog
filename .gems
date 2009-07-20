@@ -1,0 +1,5 @@
+sinatra
+rack-openid
+sequel
+maruku
+haml

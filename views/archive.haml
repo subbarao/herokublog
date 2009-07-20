@@ -1,0 +1,10 @@
+%h1
+  %table.archive
+    - posts.each do | current_post|
+      %tr
+        %td.date
+          = current_post.created_at.strftime("%b %d %Y")
+        %td.title
+          %a{ :href => "#{current_post.url}" }
+            = current_post.title
+        

@@ -1,0 +1,5 @@
+.autotest
+*.db
+*/**/.DS_Store
+public/css/.DS_Store
+.DS_Store

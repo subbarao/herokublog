@@ -1,0 +1,21 @@
+#sidebar
+  %ul
+    %li#about
+      %h2.text1
+        %b About
+    %li
+      %ul
+        %li
+          %a{:href =>"/past"} Archives
+        %li
+          %a{:href =>"/feed"} Subscribe to feed
+    %li
+      #github-badge
+      :javascript
+        GITHUB_USERNAME="subbarao";
+        GITHUB_LIST_LENGTH=10;
+        GITHUB_HEAD="div";
+      %script{:type=>"text/javascript", :src =>"http://drnicjavascript.rubyforge.org/github_badge/dist/github-badge-launcher.js"}
+    %li
+      %h2.text1
+        %b Tags

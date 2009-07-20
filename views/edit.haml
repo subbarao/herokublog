@@ -1,0 +1,9 @@
+%form{ :action => "#{url}" , :method => "post" , :name => "edit" }
+  .post
+    %h2#title
+      %input{ :type => "text", :name => "title", :value => "#{post.title}" }
+    %p#meta
+      %input{ :type => "text", :name => "tags", :value => "#{post.tags}" }
+    %p#meta= post.created_at
+    %textarea{ :name => "body" }= post.body
+    %input{ :type => "submit", :value => "Save" }
