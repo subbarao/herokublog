@@ -136,7 +136,7 @@ end
 
 get '/past/:year/:month/:day/:slug/edit' do
   auth
-  post = Post.published_posts.filter(:slug => params[:slug]).first
+  post = Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   haml :edit, :locals => { :post => post, :url => post.url }
 end
