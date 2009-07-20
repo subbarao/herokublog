@@ -6,7 +6,6 @@ require 'sequel'
 use Rack::Session::Cookie
 gem 'rack-openid'
 require 'rack/openid'
-require 'ruby-debug'
 use Rack::OpenID
 
 configure do
@@ -78,7 +77,6 @@ end
 
 get '/drafts' do
   @tags = Post.tags
-  debugger
   posts = Post.filter(:published => false).reverse_order(:created_at).limit(10)
   haml  :index, :locals => { :posts => posts }
 end
