@@ -19,8 +19,8 @@ configure do
     :admin => nil
   } )
   DB = Sequel.connect(ENV['DATABASE_URL']||"sqlite://blog.db")
-  unless DB.table_exists?( :user )
-    DB.create_table :user  do
+  unless DB.table_exists?(:posts)
+    DB.create_table :posts  do
       primary_key :id
       text :title
       text :body
