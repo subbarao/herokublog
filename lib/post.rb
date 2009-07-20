@@ -37,6 +37,13 @@ class Post < Sequel::Model
     @more
   end
 
+  # returns sorted unique non nil non empty tags, see specs
+  def self.tags
+    map(:tags).compact. # nils out
+    collect { |t| t.split(',') }.flatten.uniq. # unique tags in 1-dim array
+    collect { |t| t.strip }.sort # around spaces out and sorting
+  end
+
   def linked_tags
     (tags||'').split.inject([]) do |accum, tag|
       accum << "<a href=\"/past/tags/#{tag}\">#{tag}</a>"

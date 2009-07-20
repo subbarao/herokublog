@@ -54,6 +54,14 @@ helpers do
   def auth
     stop [ 401, 'Not authorized' ] unless admin?
   end
+  def tags
+    unless @tags.nil?
+      list = @tags.inject("<span>") do |html, t|
+        html << "<a href='/past/tags/#{t}'>#{t}</a> "
+      end
+      "#{list}</span>"
+    end
+  end
 end
 
 layout 'layout'
@@ -61,6 +69,7 @@ layout 'layout'
 ### Public
 
 get '/' do
+  @tags = Post.tags
   posts = Post.reverse_order(:created_at).limit(10)
   haml  :index, :locals => { :posts => posts }
 end
