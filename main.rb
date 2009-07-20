@@ -143,7 +143,7 @@ end
 
 post '/past/:year/:month/:day/:slug/' do
   auth
-  post = Post.published_posts.filter(:slug => params[:slug]).first
+  post = Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   post.title = params[:title]
   post.tags = params[:tags]
