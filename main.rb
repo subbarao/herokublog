@@ -19,6 +19,7 @@ configure do
   Blog = OpenStruct.new( { :identity_url => 'http://subbarao.myopenid.com/',
     :title => "RuBy JavAsCriPt RaCk rAIls SinAtRa",
     :header => "Learning grows on.......",
+    :url_base => "http://subbarao.me/",
     :disqus_shortname => nil,
     :admin_cookie_key => "scanty_admin",
     :admin_cookie_value => "51d6d976913ace58",
