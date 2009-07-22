@@ -1,6 +1,7 @@
-sinatra
+sinatra-sinatra --version '>= 0.9.2' --source=http://gems.github.com
 rack-openid
 sequel
 maruku
 haml
-subbarao-sinatra-openid --source=http://gems.github.com
+subbarao-sinatra-openid --version '>= 0.2' --source=http://gems.github.com
+hpricot 
