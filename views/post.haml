@@ -10,7 +10,7 @@
     = "tags:"
     %small.tags= post.linked_tags
   .entry= post.body_html
-  - if admin?
+  - if authorized?
     #menu
       %ul
         %li

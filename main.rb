@@ -6,6 +6,12 @@ require 'sequel'
 use Rack::Session::Cookie
 gem 'rack-openid'
 require 'rack/openid'
+
+gem 'sinatra-openid'
+require 'sinatra/openid'
+
+set :admin_urls,%w( http://subbarao.myopenid.com )
+
 use Rack::OpenID
 
 configure do
@@ -48,13 +54,6 @@ helpers do
     haml page, options.merge!(:layout => false)
   end
 
-  def admin?
-    request.cookies[Blog.admin_cookie_key] == Blog.admin_cookie_value
-  end
-
-  def auth
-    stop [ 401, 'Not authorized' ] unless admin?
-  end
   def tags
     unless @tags.nil?
       list = @tags.inject("<span>") do |html, t|
@@ -63,6 +62,7 @@ helpers do
       "#{list}</span>"
     end
   end
+
 end
 
 layout 'layout'
@@ -123,26 +123,26 @@ end
 
 
 get '/posts/new' do
-  auth
+  authorize!
   haml :edit, :locals => { :post => Post.new, :url => '/posts' }
 end
 
 post '/posts' do
-  auth
+  authorize!
   post = Post.new :title => params[:title], :tags => params[:tags], :body => params[:body], :created_at => Time.now, :slug => Post.make_slug(params[:title])
   post.save
   redirect post.url
 end
 
 get '/past/:year/:month/:day/:slug/edit' do
-  auth
+  authorize!
   post = Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   haml :edit, :locals => { :post => post, :url => post.url }
 end
 
 post '/past/:year/:month/:day/:slug/' do
-  auth
+  authorize!
   post = Post.filter(:slug => params[:slug]).first
   stop [ 404, "Page not found" ] unless post
   post.title = params[:title]
@@ -150,30 +150,4 @@ post '/past/:year/:month/:day/:slug/' do
   post.body = params[:body]
   post.save
   redirect post.url
-end
-
-get '/login' do
-  haml :login
-end
-
-get '/logout' do
-  set_cookie(Blog.admin_cookie_key, nil)
-  session.clear
-  [ 302, { 'Location' => '/' }, [] ]
-end
-
-post '/login' do
-  if resp = request.env["rack.openid.response"]
-    if resp.status == :success && request.env["rack.openid.response"].identity_url == Blog.identity_url
-      set_cookie(Blog.admin_cookie_key, Blog.admin_cookie_value)
-      redirect '/'
-    else
-      "Error: #{resp.status}"
-    end
-  else
-    headers 'WWW-Authenticate' => Rack::OpenID.build_header(
-    :identifier => params["openid_identifier"]
-    )
-    throw :halt, [401, 'got openid?']
-  end
 end

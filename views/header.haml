@@ -2,7 +2,7 @@
   #logo
     %h1
       %a{:href => "/" }= Blog.title
-  - if admin?
+  - if authorized?
     #menu
       %ul
         %li
