@@ -3,6 +3,6 @@ sinatra --version '>= 0.9.2'
 rack-openid
 sequel
 maruku
-haml
+haml --version '>= 2.0.4'
 subbarao-sinatra-openid --version '>= 0.3' --source=http://gems.github.com
 hpricot 
