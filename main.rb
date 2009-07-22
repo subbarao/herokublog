@@ -7,7 +7,7 @@ use Rack::Session::Cookie
 gem 'rack-openid'
 require 'rack/openid'
 
-gem 'sinatra-openid'
+gem 'subbarao-sinatra-openid'
 require 'sinatra/openid'
 
 set :admin_urls,%w( http://subbarao.myopenid.com )
