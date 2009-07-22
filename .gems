@@ -3,4 +3,4 @@ rack-openid
 sequel
 maruku
 haml
-subbarao-sinatra-openid --version '>= 0.2' --source=http://gems.github.com
+subbarao-sinatra-openid --source=http://gems.github.com
