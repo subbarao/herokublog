@@ -10,8 +10,7 @@ require 'rack/openid'
 gem 'subbarao-sinatra-openid'
 require 'sinatra/openid'
 
-set :admin_urls,%w( http://subbarao.myopenid.com )
-
+set :admin_urls,%w( http://subbarao.myopenid.com https://www.google.com/accounts/o8/id?id=AItOawnKufG7OyHkY96KYMdrXNeimhdeTbuFx0c )
 use Rack::OpenID
 
 configure do
