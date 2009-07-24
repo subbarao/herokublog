@@ -4,5 +4,5 @@ rack-openid
 sequel
 maruku
 haml --version '>= 2.0.4'
-subbarao-sinatra-openid --version '>= 0.3.4' --source=http://gems.github.com
+subbarao-sinatra-openid --version '>= 0.4.0' --source=http://gems.github.com
 hpricot 
